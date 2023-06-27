@@ -1,0 +1,77 @@
+Тестовое задание
+Необходимо реализовать API на языке программирования Golang на базе framework Gin. Можно использовать любые дополнительные пакеты и базы данных. Если используется база данных, то обязательно должен присутствовать файл docker-compose.yaml для развертывая решения. В API будет только один метод /driverSearch. Метод должен выполнять поиск ближайшего водителя такси по ETA. 
+ETA (англ. Estimated time of arrival) — расчётное время прибытия. В параметрах запроса URL передается широта и долгота местоположения клиента.
+
+Запрос:
+curl -X GET http://localhost:4444/driverSearch?lat=59.962746&lon=30.350777
+Ответ:
+{"driver_id": 284784}
+
+К задаче прилагается CSV файл с последней позицией одного миллиона вымашленных водителей. Cсылка на файл  https://www.dropbox.com/s/m6cjj3944x5be2l/driver_positions.csv?dl=0  .Столбцы в файле driver_id, latitude, longitude. В качестве сервиса для определения времени в пути от точки А до точки B требуется использовать сервис StarLine Maps https://maps.starline.ru/docs/?urls.primaryName=Routing%20API#/default/get_route. Метод возвращает много данных, вам потребуется только значение поля duration в массиве routes.
+Duration это время в пути от точки А до точки B. Значение поля duration приходит в секундах. Размещать решение на github.com не нужно. Решение требуется прислать в архиве в ответном письме. Задавать уточняющие вопросы нельзя, таким образом проверяется самостоятельность.
+
+Ключевые категории оценки результата задания:
+- Тестовая задача должна быть реализована в течение суток. Самое главное условие. 
+- Важна производительность решения. Ключевым фактором оценки результата является время выполнения запроса. 
+
+
+Дополнительным плюсом будет:
+- good code style
+- clean architecture
+- unit testing
+- integration testing
+- сode commenting
+- logging
+- правильные http response status codes
+- Dockerfile
+- Docker образ на https://hub.docker.com/
+- docker-compose file если используется какая-то БД
+- возможность масштабирования решения на сервере с большим количеством ядер
+- возможность масштабирования решения на нескольких физических серверах
+- отказоустойчивость на уровне кода
+- наличие файла конфигурации
+- возможность задавать порт и путь до конфига через командную строку
+
+
+
+StarLine Maps
+Пример работы с StarLine Maps для получения ETA из точки А до точки B. Значение ETA находится в поле duration в массиве routes. Значение в секундах. Точка А: latitude 59.962746, longitude 30.350777; Точка B: latitude 60.039221, longitude 30.222632.
+
+curl --request POST --url https://maps.starline.ru/api/routing/route --header 'Content-Type: application/json' \
+  --data '{
+    "locations": [
+    {
+      "lat": 59.962746,
+      "lon": 30.350777,
+      "type": "break"
+    },
+    {
+      "lat": 60.039221,
+      "lon": 30.222632,
+      "type": "break"
+    }
+  ],
+  "costing": "auto",
+  "alternates": 1,
+  "costing_options": {
+    "auto": {
+      "use_tolls": 0.5,
+      "use_highways": 1,
+      "use_tracks": 0.5,
+      "use_distance": 0.6,
+      "service_penalty": 75,
+      "service_factor": 1,
+      "maneuver_penalty": 50,
+      "width": 3,
+      "height": 2
+    }
+  },
+  "date_time": {
+    "type": 0
+  },
+  "directions_options": {
+    "units": "km",
+    "format": "osrm",
+    "language": "ru-RU"
+  }
+}'

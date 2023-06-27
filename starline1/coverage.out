@@ -1,0 +1,12 @@
+mode: set
+starline_test/internal/store/store.go:21.48,23.16 2 1
+starline_test/internal/store/store.go:23.16,25.3 1 1
+starline_test/internal/store/store.go:27.2,34.29 3 1
+starline_test/internal/store/store.go:34.29,35.45 1 1
+starline_test/internal/store/store.go:35.45,36.12 1 1
+starline_test/internal/store/store.go:38.3,39.25 2 1
+starline_test/internal/store/store.go:39.25,40.12 1 1
+starline_test/internal/store/store.go:42.3,45.47 4 1
+starline_test/internal/store/store.go:45.47,47.4 1 1
+starline_test/internal/store/store.go:48.3,53.17 3 1
+starline_test/internal/store/store.go:55.2,55.20 1 1
