@@ -1,7 +1,10 @@
-
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
 
 func main() {
 	
@@ -58,6 +61,20 @@ func ls(nums []int) int {
 		return len(nums) - 1
 	}
 	return maxInterval
+}
+
+func asd() {
+	wg := &sync.WaitGroup{}
+	for i:= 0; i < 100; i++ {
+		wg.Add(1)
+		go f1(wg)
+	}
+	wg.Wait()
+}
+
+func f1(wg *sync.WaitGroup) {
+	time.Sleep(time.Millisecond * 1000)
+	wg.Done()
 }
 
 
